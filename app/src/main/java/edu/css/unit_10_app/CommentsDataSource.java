@@ -1,7 +1,7 @@
 package edu.css.unit_10_app;
 
 /**
- * Created by M069642 on 3/27/2018.
+ * Created by Jon Bernhardt on 3/27/2018.
  */
 
 import java.util.ArrayList;
@@ -29,10 +29,18 @@ public class CommentsDataSource {
         database = dbHelper.getWritableDatabase();
     }
 
+    /**
+     * Closes the dbHelper
+     */
     public void close() {
         dbHelper.close();
     }
 
+    /**
+     * Receives a comment object and stores the values in the database
+     * @param comment
+     * @return
+     */
     public Comment createComment(String comment) {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
@@ -47,6 +55,10 @@ public class CommentsDataSource {
         return newComment;
     }
 
+    /**
+     * Deletes the comment that was passed to this method
+     * @param comment
+     */
     public void deleteComment(Comment comment) {
         long id = comment.getId();
         System.out.println("Comment deleted with id: " + id);
@@ -54,6 +66,10 @@ public class CommentsDataSource {
                 + " = " + id, null);
     }
 
+    /**
+     * Creates a List of comments from the database
+     * @return
+     */
     public List<Comment> getAllComments() {
         List<Comment> comments = new ArrayList<Comment>();
 
@@ -71,6 +87,11 @@ public class CommentsDataSource {
         return comments;
     }
 
+    /**
+     * Create a comment from user input
+     * @param cursor
+     * @return
+     */
     private Comment cursorToComment(Cursor cursor) {
         Comment comment = new Comment();
         comment.setId(cursor.getLong(0));
