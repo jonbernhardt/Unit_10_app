@@ -17,6 +17,7 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Creates a new link to the database
         datasource = new CommentsDataSource(this);
         datasource.open();
 
@@ -29,6 +30,10 @@ public class MainActivity extends ListActivity {
         setListAdapter(adapter);
     }
 
+    /**
+     * This method checks what button was clicked and performs the action requested
+     * @param view
+     */
     // Will be called via the onClick attribute
     // of the buttons in main.xml
     public void onClick(View view) {
@@ -36,14 +41,14 @@ public class MainActivity extends ListActivity {
         ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
         Comment comment = null;
         switch (view.getId()) {
-            case R.id.add:
+            case R.id.add: //if add is selected, add a random comment
                 String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
                 int nextInt = new Random().nextInt(3);
                 // save the new comment to the database
                 comment = datasource.createComment(comments[nextInt]);
                 adapter.add(comment);
                 break;
-            case R.id.delete:
+            case R.id.delete: //if delete is selected, the first row will be removed
                 if (getListAdapter().getCount() > 0) {
                     comment = (Comment) getListAdapter().getItem(0);
                     datasource.deleteComment(comment);
@@ -54,12 +59,18 @@ public class MainActivity extends ListActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * When the app is resumed, open the database connection
+     */
     @Override
     protected void onResume() {
         datasource.open();
         super.onResume();
     }
 
+    /**
+     * When the app is paused, close the database connection
+     */
     @Override
     protected void onPause() {
         datasource.close();
