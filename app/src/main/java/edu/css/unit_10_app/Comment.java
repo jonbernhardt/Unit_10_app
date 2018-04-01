@@ -7,6 +7,24 @@ package edu.css.unit_10_app;
 public class Comment {
     private long id;
     private String comment;
+    private String rating;
+
+    /**
+     * Returns rating
+     * @return
+     */
+    public String getRating() {
+        return rating;
+    }
+
+    /**
+     * Sets rating
+     * @param rating
+     */
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
 
     /**
      * Returns comment id
@@ -47,6 +65,6 @@ public class Comment {
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
-        return comment;
+        return "Rating: " + rating + " " + comment;
     }
 }

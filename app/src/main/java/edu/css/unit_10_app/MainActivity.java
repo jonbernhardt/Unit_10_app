@@ -8,14 +8,18 @@ import java.util.List;
         import android.os.Bundle;
         import android.view.View;
         import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 public class MainActivity extends ListActivity {
     private CommentsDataSource datasource;
+    EditText etRating;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        etRating = (EditText) findViewById(R.id.etRating);
 
         //Creates a new link to the database
         datasource = new CommentsDataSource(this);
@@ -41,11 +45,12 @@ public class MainActivity extends ListActivity {
         ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
         Comment comment = null;
         switch (view.getId()) {
-            case R.id.add: //if add is selected, add a random comment
+            case R.id.add: //if add is selected, add a random comment, add user's rating
                 String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
                 int nextInt = new Random().nextInt(3);
+                String rating = etRating.getText().toString();
                 // save the new comment to the database
-                comment = datasource.createComment(comments[nextInt]);
+                comment = datasource.createComment(comments[nextInt], rating);
                 adapter.add(comment);
                 break;
             case R.id.delete: //if delete is selected, the first row will be removed

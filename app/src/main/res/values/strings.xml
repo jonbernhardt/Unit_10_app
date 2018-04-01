@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Unit_10_app</string>
+    <string name="etRating">Rating (1 - 5)</string>
 </resources>
